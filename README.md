@@ -197,7 +197,7 @@ ORDER BY default_rate_percent DESC;
 ```
 <img width="384" height="271" alt="bank_loan_sql_4" src="https://github.com/user-attachments/assets/4fc54c64-0be7-444b-be8f-b82ef96f6e40" />
 
-### 5. What is the impact of number of bankruptcies and tax_liens on loan default rate?
+### 5. What is the impact of number of bankruptcies and tax liens on loan default rate?
 ```sql
 SELECT
     CASE
