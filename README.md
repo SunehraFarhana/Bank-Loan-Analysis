@@ -5,7 +5,7 @@ Loans are a primary source of revenue for lending institutions. Banks lend money
 
 * ❌ "Approve anyone who applies for a loan" → More defaulted loans → **Increase in losses**
 * ❌ "Only approve perfect borrowers for loans" → Fewer loans dispersed → **Decrease in revenue**
-* ✅ "Approve borrowers whose characteristics indicate that they are more likely to repay their loan" → More loans dispersed and repaid → **Increase in profit**
+* ✅ "Approve borrowers whose characteristics indicate that they are more likely to pay back their loan" → More loans dispersed and repaid with interest → **Increase in profit**
 
 ---
 ## Table of Contents
@@ -140,7 +140,7 @@ An in-depth [**Jupyter Notebook**](https://github.com/SunehraFarhana/Bank-Loan-D
 
 ---
 ## Exploratory Data Analysis in MySQL Workbench
-These SQL queries revealed data trends and gave guidance for assembling visualizations.
+These SQL queries were used to reveal data trends and give guidance towards assembling visualizations. A higher loan default rate indicates a higher likelihood of the borrower being unable to pay back their loan. Therefore, characteristics resulting in a lower loan default rate reveal the more desirable traits of a borrower's profile.
 
 ### 1. What is the percentage of loans by loan status?
 ```sql
@@ -239,15 +239,34 @@ An in-depth [**SQL file**](https://github.com/SunehraFarhana/Bank-Loan-Data-Anal
 
 ---
 ## Visualizations in Tableau Public
-The Tableau Public visualizations can be found [**here**](https://public.tableau.com/views/bank_loan_visualizations/Overview?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link).
+The Tableau Public visualizations can be found [**here**](https://public.tableau.com/views/bank_loan_visualizations/Overview?:language=en-US&:sid=&:display_count=n&:origin=viz_share_link). The data was organized into an "Overview" dashboard which summarizes the general information from the bank loan dataset, showing the number of customers that fall underneath each relevant category. In addition, a "Risk Analysis" dashboard was created to highlight the risky attributes within each relevant category. Users can easily navigate between the two dashboards by clicking the button in the top right corner.
 
 <img width="1349" height="649" alt="bank_loan_visualizations_dashboard_overview" src="https://github.com/user-attachments/assets/7b141e75-c7e8-400f-ba57-f0d46da28ba5" />
 <img width="1349" height="649" alt="bank_loan_visualizations_dashboard_risk_analysis" src="https://github.com/user-attachments/assets/1461b2a0-4e1c-43e9-bc62-f932a583b8ed" />
 
+The "Risk Analysis" dashboard combines the average loan default rate with a red-yellow-green color scheme to make the red flags of borrower behavior abundantly clear. Categories with a higher average loan default rate are colored in red, thus drawing attention towards the borrower behavior which usually results in unpaid loans.
+
 ---
 ## Project Insight and Recommendations
+The bank loan data reveals:
+* Approximately 25% of the loans issued by this bank were charged-off.
+* Approximately 63% of charged-off loans are short-term.
+* ❌ **High-Risk Borrower Traits:**
+	* High DTI (low annual income + high monthly debt)
+	* Renting home
+	* Working in current job for one year or less
+	* Loans for the purpose of small business or renewable energy
+ 	* Multiple bankruptcies and/or tax liens
 
+In order to maximize profit, lending institutions should:
+* ❌ Implement stricter underwriting for borrowers exhibiting high-risk traits
+	* Renters, short-term employees, and low annual income paired with high monthly debt indicates an inability to be a reliable bank customer
+* ✅ Grant loans for borrowers showing signs of stable income
+	* 
+* ⚠️ Proceed with caution
+* 
+* 
 
 ---
 ## Conclusion
-
+This project uses financial data analytics to assist lending institutions in making smarter underwriting decisions. It finds patterns between borrower traits and loan default rate, to determine which traits are worth the risk of lending money, so that banks may optimize profit when evaluating a customer's likelihood of paying back their loan.
