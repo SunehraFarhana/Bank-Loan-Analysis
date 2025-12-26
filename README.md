@@ -267,8 +267,8 @@ In order to maximize profit, lending institutions should:
 * ⚠️ **Observe, evaluate, and proceed with caution when noticing red flags.**
 	* **Red Flags:** Loans for small business or renewable energy purposes, customers with bankruptcies or tax liens.
  	* Rather than outright reject borrowers with these traits, observe their entire customer profile and determine if other factors can maintain their ability to repay the loan.
-	* Home-owner, long-term employee, good credit score, and/or low DTI? → Grant, but limit loan amount
-	* Else, too risky to grant
+	* Home-owner, long-term employee, good credit score, and/or low DTI? → **Grant, but limit loan amount**
+	* Else → **Too risky to grant**
 
 ---
 ## Conclusion
