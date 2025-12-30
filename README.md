@@ -154,18 +154,88 @@ ORDER BY percentage_of_loans DESC;
 ```
 <img width="259" height="77" alt="bank_loan_sql_1" src="https://github.com/user-attachments/assets/58421cb4-4b66-4e09-9770-36616a5ef9a1" />
 
-### 2. What is the average current loan amount, annual income, and monthly debt by loan status?
+### 2. What is the median current loan amount, annual income, and monthly debt by loan status?
 ```sql
+WITH loan_amount_median AS (
+    SELECT
+        loan_status,
+        AVG(1.0 * current_loan_amount) AS median_current_loan_amount
+    FROM (
+        SELECT
+            loan_status,
+            current_loan_amount,
+            ROW_NUMBER() OVER (
+                PARTITION BY loan_status
+                ORDER BY current_loan_amount
+            ) AS row_asc,
+            COUNT(*) OVER (
+                PARTITION BY loan_status
+            ) AS total_rows
+        FROM bank_loan_schema.bank_loan_dataset_cleaned
+        WHERE current_loan_amount IS NOT NULL
+    ) sub
+    WHERE row_asc IN ((total_rows + 1) / 2, (total_rows + 2) / 2)
+    GROUP BY loan_status
+),
+
+annual_income_median AS (
+    SELECT
+        loan_status,
+        AVG(1.0 * annual_income) AS median_annual_income
+    FROM (
+        SELECT
+            loan_status,
+            annual_income,
+            ROW_NUMBER() OVER (
+                PARTITION BY loan_status
+                ORDER BY annual_income
+            ) AS row_asc,
+            COUNT(*) OVER (
+                PARTITION BY loan_status
+            ) AS total_rows
+        FROM bank_loan_schema.bank_loan_dataset_cleaned
+        WHERE annual_income IS NOT NULL
+    ) sub
+    WHERE row_asc IN ((total_rows + 1) / 2, (total_rows + 2) / 2)
+    GROUP BY loan_status
+),
+
+monthly_debt_median AS (
+    SELECT
+        loan_status,
+        AVG(1.0 * monthly_debt) AS median_monthly_debt
+    FROM (
+        SELECT
+            loan_status,
+            monthly_debt,
+            ROW_NUMBER() OVER (
+                PARTITION BY loan_status
+                ORDER BY monthly_debt
+            ) AS row_asc,
+            COUNT(*) OVER (
+                PARTITION BY loan_status
+            ) AS total_rows
+        FROM bank_loan_schema.bank_loan_dataset_cleaned
+        WHERE monthly_debt IS NOT NULL
+    ) sub
+    WHERE row_asc IN ((total_rows + 1) / 2, (total_rows + 2) / 2)
+    GROUP BY loan_status
+)
+
 SELECT
-    loan_status,
-    ROUND(AVG(current_loan_amount), 2) AS avg_current_loan_amount,
-	ROUND(AVG(annual_income), 2) AS avg_annual_income,
-    ROUND(AVG(monthly_debt), 2) AS avg_monthly_debt
-FROM bank_loan_schema.bank_loan_dataset_cleaned
-GROUP BY loan_status
-ORDER BY avg_current_loan_amount DESC;
+    l.loan_status,
+    l.median_current_loan_amount,
+    a.median_annual_income,
+    m.median_monthly_debt
+FROM loan_amount_median l
+JOIN annual_income_median a
+    ON l.loan_status = a.loan_status
+JOIN monthly_debt_median m
+    ON l.loan_status = m.loan_status
+ORDER BY l.loan_status;
 ```
-<img width="440" height="76" alt="bank_loan_sql_2" src="https://github.com/user-attachments/assets/7ce5e0b5-4598-4569-8c47-25196aa438f8" />
+<img width="501" height="76" alt="bank_loan_sql_2" src="https://github.com/user-attachments/assets/ab2a869b-8185-4073-be4b-db3ccc1d3480" />
+
 
 ### 3. What is the loan default rate by customer debt-to-income ratio? Which debt-to-income ratio has the highest default rate?
 ```sql
